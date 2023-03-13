@@ -6,7 +6,8 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const { Server } = require('socket.io')
 const { auth } = require('./middleware/auth.js')
-
+const FileStore = require('session-file-store')
+const MongoStore = require('connect-mongo') 
 require('dotenv').config()
 
 
@@ -33,6 +34,32 @@ app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname+'/views')
 app.set('view engine', 'handlebars')
 
+//SESSION
+/* const fileStore = FileStore(session)
+app.use(session({
+    store: new fileStore({ path: __dirname+'/sessions',
+    ttl: 100, //vida de la session
+    retries: 0}),    
+
+    secret: 's3cr3t0',
+    resave: false,
+    saveUninitialized: false,
+})) */
+
+//MONGO/
+app.use(session({  
+    store: MongoStore.create({
+        mongoUrl: 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/test',
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+
+        }, ttl: 15,
+    }),
+    secret: 's3cr3t0',
+    resave: false,
+    saveUninitialized: false,
+}))
 /* RUTA RAIZ */
 app.use(useRouter)
 

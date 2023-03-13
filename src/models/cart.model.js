@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate');
 const CartManager = require('../daos/cartManagerfile')
 
 const cartCollection = 'carts'
@@ -12,11 +13,10 @@ const CartSchema = new Schema({
             product: {
                 type: Schema.Types.ObjectId,
                 ref: 'products'
-            }
-            /* quantity: {
+            },
+            quantity: {
                 type: Number,
-
-            } */
+            }
         }]
     }
 })
@@ -25,9 +25,10 @@ const CartSchema = new Schema({
 //          ref: 'usuarios'},
 
 CartSchema.pre('find', function(){
-    this.populate('products.product')
+    this.populate('products.pid')
 })
 
+CartSchema.plugin(mongoosePaginate)
 const CartModel = model(cartCollection, CartSchema)
 
 module.exports = CartModel

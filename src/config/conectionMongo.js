@@ -65,20 +65,21 @@ const ordenes = [
         }
         ];
 
-    const url = "mongodb://0.0.0.0:27017/apprealb"
-    //const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/test'
+    //const url = "mongodb://0.0.0.0:27017/apprealb"
+    const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/test'
 
 const initConnection = async () => {
     try{
         await connect(url)
         console.log('Connecting')
 
-        //solicitar ordenes//
+        /* //solicitar ordenes//
         let result = await OrderModel.find({...ordenes})
-        console.log(result)
+        console.log(result) */
     //insertar ordenes//
-        /* let result = await OrderModel.insertMany(ordenes)
-        console.log(result)
+        //let result = await OrderModel.insertMany(ordenes)
+       //console.log(result) 
+/*
     -------------------------
     
     //solicitar ordenes//
@@ -116,8 +117,8 @@ const initConnection = async () => {
         }
             ])
         console.log(orders) */
-        let users = await UserModel.paginate({genero: 'Female'}, {Limit: 20, page: 1})
-        console.log(users)
+        //let users = await UserModel.paginate({genero: 'Female'}, {Limit: 20, page: 1})
+        //console.log(users)
     }catch (error) {
         console.error(error)
         process.exit()

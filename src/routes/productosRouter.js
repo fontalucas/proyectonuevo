@@ -5,24 +5,24 @@ const router = Router()
 //const Product = new ProductModel
 
 
-router.get('/', async (res, req) => {
+router.get('/', async (req, res) => {
     // esto estara en un metodo de ProductManager
-    const products = await ProductModel.find({})
-
-    res.send(products)
+    const productos = await ProductModel.find({})
+    res.json({
+        status: 'success',
+        payload: productos,
+    })
 })
-router.post('/', async (res, req) => {
+router.post('/', async (req, res) => {
     const { title, price, category } = req.body
     // esto estara en un metodo de ProductManager
-    const products = await ProductModel.create({
+    const productos = await ProductModel.create({
         title,
         price,
         category
     })
-    res.json(products)
+    res.json(productos)
 })
-
-
 
 
 module.exports = router
