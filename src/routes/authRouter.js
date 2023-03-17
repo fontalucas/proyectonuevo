@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const passport = require('passport')
 const UserModel = require('../models/userModel')
 
 const router = Router()
@@ -26,6 +27,13 @@ router.get('/', async (req, res)=>{
 
 router.get('/login', async (req, res)=>{
     res.status(200).render('login')})
+
+
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}))
+
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/api/auth/login'}))
+
+
 
 
 router.post('/login', async (req, res)=>{

@@ -14,7 +14,7 @@ router.get('/',  (req, res) => {
 //RUTAS PARA PRODUCTOS
 router.use('/auth', authRouter)
 router.use('/cookie', cookieRouter)
-router.use('/api/productos', productRouter)
+router.use('/api/products', productRouter)
 router.use('/api/usuarios', userRouter)
 
 

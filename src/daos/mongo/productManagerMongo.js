@@ -22,11 +22,16 @@ module.exports = class ProductManagerMongo{
             console.log(err)
         }
     }
-    async getProduct(){
+    async getProduct(category, limit, page, orden){
         try {
-            const products = await ProductModel.paginate({limit: 10, page: 1})
+            const products = await ProductModel.paginate({category: category}, {limit: 10, page: page})
             console.log(products)
-            return products
+            if (!limit) {
+                return products
+            }
+            await ProductModel.aggregate({$sort:{totalQuantity: -1 || 1}})
+            console.log(orden)
+
         }catch(err){
             console.log(err)
         }

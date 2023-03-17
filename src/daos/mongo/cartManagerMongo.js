@@ -12,6 +12,16 @@ module.exports = class CartManagerMongo {
         }
     }
 
+    async getCartProducts(cid, limit, page){
+        try {
+            const cartProducts = await CartModel.paginate({_id: cid}, {limit: limit, page: page, lean: true})
+            console.log(cartProducts)
+            return cartProducts
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     async uploadProduct(cid, pid){
         try{
             const cartComplete = await CartModel.findOne({_id: cid})
@@ -21,6 +31,23 @@ module.exports = class CartManagerMongo {
             }
         }catch(err){
             console.log(err)
+        }
+    }
+
+    async uploadArrayProduct(cid, product){
+        try {
+            const arrayProduct = await CartModel.updateOne({_id: cid}, {$set: product})
+            return arrayProduct
+        } catch (error) {
+            
+        }
+    }
+    async uploadArrayProduct(cid, product){
+        try {
+            const arrayProduct = await CartModel.deleteOne({_id: cid}, {$set: product})
+            return arrayProduct
+        } catch (error) {
+            
         }
     }
 

@@ -33,6 +33,9 @@ module.exports = class CartManager {
             })
         }
     }
+
+
+
     getCartProducts = () => {
         if (fs.existsSync(this.path)) {
             let data = fs.readFileSync(this.path, 'utf-8',)

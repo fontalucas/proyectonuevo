@@ -1,11 +1,9 @@
 const {Schema, model} = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate');
-const CartManager = require('../daos/cartManagerfile')
 
 const cartCollection = 'carts'
 
 const CartSchema = new Schema({
-    //cart = [CartManager.createCart()]
 
     /* CLASE MONGO */
     products: {

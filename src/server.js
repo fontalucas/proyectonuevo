@@ -8,6 +8,8 @@ const { Server } = require('socket.io')
 const { auth } = require('./middleware/auth.js')
 const FileStore = require('session-file-store')
 const MongoStore = require('connect-mongo') 
+const { initializePassport } = require('./middleware/initialPassport')
+const passport = require('passport')
 require('dotenv').config()
 
 
@@ -28,6 +30,12 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+/* PASSPORT */
+
+initializePassport()
+app.use(passport.initialize())
+
+
 
 /* MOTOR PLANTILLAS */
 app.engine('handlebars', handlebars.engine())
@@ -60,6 +68,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }))
+
+
+
+
 /* RUTA RAIZ */
 app.use(useRouter)
 
