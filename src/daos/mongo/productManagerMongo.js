@@ -3,26 +3,17 @@ const ProductModel = require("../../models/productos.model")
 
 module.exports = class ProductManagerMongo{
     
-    newProduct = {
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
-        category
-    }
 
-    async addProduct({...newProduct}){
+    async addProduct({title, description, price, thumbnail}){
         try {
-            await ProductModel.create({...newProduct})
+            await ProductModel.create({title, description, price, thumbnail})
             if (newProduct.title === '' || newProduct.description === '' || newProduct.price === '')
                 return 'Llenar bien los campos'
         }catch (err) {
             console.log(err)
         }
     }
-    async getProduct(category, limit, page, orden){
+    async getProducts(category, limit, page, orden){
         try {
             const products = await ProductModel.paginate({category: category}, {limit: 10, page: page})
             console.log(products)

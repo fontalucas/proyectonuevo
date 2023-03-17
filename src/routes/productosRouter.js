@@ -1,18 +1,21 @@
 const { response } = require('express')
 const { Router } = require('express')
 const ProductModel = require('../models/productos.model.js')
+const ProductManagerMongo = require('../daos/mongo/productManagerMongo')
 
 const router = Router()
 
+const productManagerMongo = new ProductManagerMongo
 // el get trae http://localhost:8080/api/productos
 router.get('/', async (req, res) => {
     try { 
         const {page = 1 } = req.query
-        const {payload, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await ProductModel.paginate({}, {limit: 10, page, lean: true})
-        
+        //const {payload, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await ProductModel.paginate({}, {limit: 10, page, lean: true})
+        const {payload, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await productManagerMongo.getProducts()
+
         const products = payload
         
-        res.status(200).send('products',{
+        res.status(200).render('products',{
             status: 'success',
             payload: products,
             totalPages,
@@ -36,8 +39,8 @@ router.get('/', async (req, res) => {
 router.get('/:pid', async (req, res) => {
     try { 
         const {pid} = req.params
-        const productById = await ProductModel.getProductById(pid)
-        const products = await ProductModel.getProducts()
+        const productById = await productManagerMongo.getProductById(pid)
+        const products = await productManagerMongo.getProducts()
 
         if(!productById) return res.send(products)
 
@@ -59,7 +62,7 @@ try{
     if (!title || !description || !price) {
         return res.status(404).send({mensaje: 'pasar bien el producto'})
     }
-    let result = await ProductModel.addProduct({
+    let result = await productManagerMongo.addProduct({
         title,
         description,
         price
@@ -84,7 +87,7 @@ router.put('/:pid', async (req, res = response) => {
             return res.status(404).send({mensaje: 'pasar bien usuarios'})
         }
         let obj = {title, description, price}
-        let result = await ProductModel.updateProduct(
+        let result = await productManagerMongo.updateProduct(
             pid, obj)
         res.status(201).send({
             result,
@@ -99,7 +102,7 @@ router.put('/:pid', async (req, res = response) => {
 router.delete('/:pid', async (req, res) => {
 
     const {pid} = req.params
-    await ProductModel.deleteProduct({_id: pid})
+    await productManagerMongo.deleteProduct({_id: pid})
     
     res.status(200).send({
         mensaje: 'producto borrado', 

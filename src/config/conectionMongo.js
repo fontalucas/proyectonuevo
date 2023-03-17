@@ -66,7 +66,7 @@ const ordenes = [
         ];
 
     //const url = "mongodb://0.0.0.0:27017/apprealb"
-    const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/test'
+    const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net'
 
 const initConnection = async () => {
     try{
