@@ -10,14 +10,13 @@ const productManagerMongo = new ProductManagerMongo
 router.get('/', async (req, res) => {
     try { 
         const {page = 1 } = req.query
-        //const {payload, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await ProductModel.paginate({}, {limit: 10, page, lean: true})
-        const {payload, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await productManagerMongo.getProducts()
+        const {docs, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await productManagerMongo.getProducts(category, limit, page, orden)
 
-        const products = payload
+        const products = docs
         
         res.status(200).render('products',{
             status: 'success',
-            payload: products,
+            products,
             totalPages,
             prevPage,
             nextPage,
