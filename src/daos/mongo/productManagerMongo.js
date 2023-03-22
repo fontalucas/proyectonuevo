@@ -14,7 +14,6 @@ module.exports = class ProductManagerMongo{
         }
     }
     async getProducts(category, limit, page, orden){
-        let orden = {totalQuantity: -1 || 1}
         try {
             const products = await ProductModel.paginate({category: category}, {limit: 10, page: page, $sort: orden})
             console.log(products)

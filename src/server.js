@@ -1,6 +1,6 @@
 const express = require('express')
 const {initConnection } = require('./config/conectionMongo')
-const useRouter = require('./routes/index')
+const useRouter = require('./routes/index.js')
 const handlebars = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
@@ -14,10 +14,10 @@ require('dotenv').config()
 
 
 const app = express()
+initConnection()
 const PORT = 8080 || process.env.PORT
 
 //----------------------------------------------------------------//
-initConnection()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
@@ -54,7 +54,7 @@ app.use(session({
     saveUninitialized: false,
 })) */
 
-//MONGO/
+//MONGO SESSION/
 app.use(session({  
     store: MongoStore.create({
         mongoUrl: 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/test',
@@ -70,24 +70,20 @@ app.use(session({
 }))
 
 
-
-
 /* RUTA RAIZ */
 app.use(useRouter)
 
 
 const httpServer = app.listen(PORT, err => {
 if (err) return console.log(err).res.status(500).send('Todo mal')
-    console.log(`Servidor ${httpServer.address().PORT} funcionando`)
+    console.log(`Servidor ${PORT} funcionando`)
 })
 
 // instanciando socket
 const io = new Server(httpServer)
 
 
-const mensajes = [
-    // {user: 'Fede', message: 'Hola como están'}
-]
+const mensajes = []
 let connectedClients = []
 
 io.on('connection', socket => {
@@ -99,7 +95,6 @@ io.on('connection', socket => {
         console.log('message',data)
         mensajes.push(data)
         io.emit('messageLogs', mensajes)
-        // persisti 
     })
 
     socket.on('authenticated', data => {
