@@ -1,3 +1,5 @@
+//middleware para comprobar el rol de usuario
+
 const authorization = role => {
     return async (req, res, next) => {
         if(!req.user) return res.status(401).json({status: 'error', error: 'No autorizado'})

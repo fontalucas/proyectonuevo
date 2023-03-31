@@ -1,6 +1,6 @@
 const passport = require('passport')
 
-
+//para confirmar que existe usuario
 const passportCall = strategy => {
     return async(req, res, next) => {
         passport.authenticate(strategy, function(err, user, info){
@@ -8,7 +8,8 @@ const passportCall = strategy => {
             return next(err)
             if (!user) 
             return res.status(401).send({status: 'error', error: info.message ? info.message : info.toString()})
-            req.user = next()
+            req.user = user
+            next()
         })(req, res, next)
 
     }

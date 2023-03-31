@@ -11,7 +11,7 @@ const router = Router()
 router.get('/', passportCall('jwt'), authorization('admin'), async (req, res) =>{
     try {
         const { page = 1 } = req.query
-        const {  docs, hasPrevPage, hasNextPage, prevPage, nextPage } = await UserModel.paginate({ },{limit: 10, page, lean: true})
+        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage } = await UserModel.paginate({ },{limit: 10, page, lean: true})
         // console.log(users)
         // const users = docs
         res.status(200).render('users', {
@@ -91,7 +91,7 @@ router.delete('/:uid', async (req, res)=> {
     res.status(200).send({ 
         status: 'success',
         result: true
-     })
+    })
 })
 
 module.exports = router

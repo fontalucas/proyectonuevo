@@ -1,10 +1,11 @@
 const { Router } = require('express')
 const passport = require('passport')
-const UserModel = require('../models/userModel')
+const {UserModel} = require('../models/userModel')
+const {generateToken} = require('../utils/jsonwt')
 
 const router = Router()
 
-//let users = [{first_name: 'John', last_name: 'aasd', email: 'a@gmail.com', password: '1234', role: 'user'}]
+let users = [{first_name: 'John', last_name: 'J', email: 'a@gmail.com', password: '1234', role: 'user'}]
 
 router.get('/', async (req, res)=>{    
     let testUser = {
@@ -19,8 +20,8 @@ router.get('/', async (req, res)=>{
     res.status(200).render('index', {
         user: testUser,
         isAdmin: testUser.role==='admin',
-        products,
-        style: 'index.css'
+        //products,
+        //style: 'index.css'
     })
 })
 
@@ -37,10 +38,17 @@ router.get('/githubcallback', passport.authenticate('github', {failureRedirect: 
 router.post('/login', async (req, res)=>{
     const {email, password} = req.body
 
-    const user = await UserModel.findOne({email})
-
+    //const user = await UserModel.findOne({email})
+    const user = await users.find(user => user.email === email && user.password === password)
+    
     if (!user) return res.status(404).send({status: 'error', message: 'Usuario incorrecto'})
-
+    
+        const token = generateToken(user)
+    
+        res.cookie('CoderKeyQueFuncionaCOmoUnSecret', token, {
+            maxAge:60 * 60 * 24 ,
+            httpOnly: true}).send({message: 'logged in'})
+            
     if (email !== 'lucasadmin@gmail.com' || password !== 'Admin') {
         req.session.user = {name: `${user.first_name} ${user.last_name}`, email: user.email}
         res.status(200).send({
@@ -48,12 +56,6 @@ router.post('/login', async (req, res)=>{
             payload: req.session.user,
             message: 'Login correcto'
         })
-        
-        /* const access_token = generateToken(user)
-        
-        res.cookie('CoderKeyQueFuncionaCOmoUnSecret', token, {
-            maxAge:60 * 60 * 24 ,
-            httpOnly: true}).send({message: 'logged in'}) */
 }
 
 })
@@ -87,10 +89,12 @@ router.post('/register', async (req, res)=>{
             password
         }
         let result = await UserModel.create(user)
+        const accessToken = generateToken(user)
         res.status(200).json({
             status: 'success',
             message: 'usuario creado con exito',
-            payload: result
+            payload: result,
+            accessToken
         })
     }catch(err) {console.log(err)}
 })
@@ -101,7 +105,7 @@ router.post('/register', async (req, res)=>{
 /* router.get('/login', (req, res)=>{
     const {username, password} = req.query
     // console.log(data)
-    if (username !== 'fede' || password !== 'admin') {
+    if (username !== '' || password !== '') {
         return res.send('login falló')
     } else {
 

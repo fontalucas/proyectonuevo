@@ -1,12 +1,12 @@
 const express = require('express')
-const {initConnection } = require('./config/conectionMongo')
+const { initConnection } = require('./config/conectionMongo')
 const useRouter = require('./routes/index.js')
+const logger = require('morgan')
 const handlebars = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const { Server } = require('socket.io')
-const { auth } = require('./middleware/auth.js')
-const FileStore = require('session-file-store')
+//const FileStore = require('session-file-store')
 const MongoStore = require('connect-mongo') 
 const { initializePassport } = require('./middleware/initialPassport')
 const passport = require('passport')
@@ -21,20 +21,13 @@ const PORT = 8080 || process.env.PORT
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
+app.use(logger('dev'))
 app.use('/virtual', express.static(__dirname+'/public'))
 
-/* COOKIES */
-app.use(cookieParser('p@l@br@s3cr3t@'))
-app.use(session({
-    secret: 'secretCoder',
-    resave: true,
-    saveUninitialized: true
-}))
-/* PASSPORT */
 
+/* PASSPORT */
 initializePassport()
 app.use(passport.initialize())
-
 
 
 /* MOTOR PLANTILLAS */
@@ -57,21 +50,30 @@ app.use(session({
 //MONGO SESSION/
 app.use(session({  
     store: MongoStore.create({
-        mongoUrl: 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/test',
+        mongoUrl: 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/ecommerce',
         mongoOptions: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
 
-        }, ttl: 15,
+        }, ttl: 150000,
     }),
     secret: 's3cr3t0',
     resave: false,
     saveUninitialized: false,
 }))
 
+/* COOKIES */
+app.use(cookieParser('p@l@br@s3cr3t@'))
+app.use(session({
+    secret: 'secretCoder',
+    resave: true,
+    saveUninitialized: true
+}))
+
+
 
 /* RUTA RAIZ */
-app.use(useRouter)
+app.use('/', useRouter)
 
 
 const httpServer = app.listen(PORT, err => {

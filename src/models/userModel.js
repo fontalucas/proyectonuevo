@@ -6,7 +6,6 @@ const userCollection = 'usuarios'
 const userSchema = new Schema({
     first_name: {
         type: String,
-        index: true,
         required: true,
     },
     last_name: {
@@ -15,13 +14,16 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
+        index: true,
         required: true,
         unique: true,
     },
-    genero: {
+    role: {
         type: String,
-
-    }
+        enum: ['admin', 'user'],
+        default: 'user',
+    },
+    password: String,
 })
 
 userSchema.plugin(mongoosePaginate)

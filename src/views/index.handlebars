@@ -2,10 +2,6 @@
     <h1>¡Hola, {{ user.name }}!, ¡Que gusto verte!</h1>
     <h2>Socket Io</h2>
     <hr>
-    {{!-- <form action="">
-        <input type="text" name="mensaje">
-        <input type="submit" >
-    </form> --}}
     <div>
         <input type="text" name="chatbox" id="chatbox">
     </div>
@@ -16,11 +12,10 @@
     
     <hr>
     {{#if isAdmin}}
-        {{#each products}}
-            <div class="container d-flex justify-content-center align-items-center">
+        <div class="container d-flex justify-content-center align-items-center">
             {{#each products}}
                 <div class="card w-25 m-3 shadow-lg">
-                    <img src="{{this.imageUrl}}" class="card-img-top" alt="...">
+                    <img src="{{this.thumnail}}" class="card-img-top" alt="hamburguesa">
                     <div class="card-body">
                         <p>Nombre del producto: {{this.title}}</p>
                         <p>Precio: {{this.price}}</p>

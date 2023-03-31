@@ -1,11 +1,14 @@
 const { connect } = require('mongoose')
-const CartModel = require('../models/cart.model')
-const OrderModel = require('../models/order.model')
-const ProductModel = require('../models/productos.model')
-const UserModel = require('../models/userModel')
+const MongoStore = require('connect-mongo') 
+const dotenv = require('dotenv')
+const { commander } = require('../utils/commander')
 
 
-const ordenes = [
+//const CartModel = require('../models/cart.model')
+//const OrderModel = require('../models/order.model')
+//const ProductModel = require('../models/productos.model')
+//const UserModel = require('../models/userModel')
+/* const ordenes = [
         {
             name: "Margherita",
             size: "small",
@@ -63,13 +66,47 @@ const ordenes = [
             quantity: 3,
             date: "2022-03-21T09:08:12Z"
         }
-        ];
+        ]; */
 
-    //const url = "mongodb://0.0.0.0:27017/apprealb"
-    const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net'
+//const environments = 'PRODUCTION'
+// -----------------------     CLASE DE PROCESS ------------------
+/* const {mode} = commander.opts()
+dotenv.config({
+    path: mode === 'DEVELOPMENT' ? './.env.development' : './.env.production'
+}) */
 
-const initConnection = async () => {
-    try{
+// const url = process.env.MONGO_URL
+
+
+/* const objConfig = {
+    port: process.env.port || 8080,
+    mongoUrl: process.env.MONGO_URL,
+    adminName: process.env.ADMIN_NAME,
+    adminPassword: process.env.ADMIN_PASSWORD,
+
+    initConnection: async () => {
+        await mongoose.connect(url, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+    },
+    session: {  
+        store: MongoStore.create({
+            mongoUrl: url,
+            mongoOptions: {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            }, ttl: 150000
+        }),
+        secret: 's3cr3t0',
+        resave: false,
+        saveUninitialized: false,
+    }
+} */
+    const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/ecommerce'
+
+    const initConnection = async () => {
+        try{
         await connect(url)
         console.log('Connecting')
 
