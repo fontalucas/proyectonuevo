@@ -1,0 +1,22 @@
+<div>
+    <div>
+        {{#each products}}
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{this.thumbnail}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text">{{this.price}}</p>
+                        <button type="submit">Agregar al carrito</button>
+                    </div>
+            </div>
+        {{/each}}
+    </div>
+
+    {{#if hasPrevPage}}
+        <a href="/api/products?page={{prevPage}}&&limit={{limit}}"><button>ANTERIOR</button></a>
+    {{/if}}
+    {{#if hasNextPage}}
+        <a href="/api/products?page={{nextPage}}&&limit={{limit}}"><button>SIGUIENTE</button></a>
+    {{/if}}
+</div>

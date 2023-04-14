@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Login</h1>
+    <form action="/login" method="post" class="form-group w-50">       
+        <label class="form-label">Email</label>
+        <input type="text" name="email" class="form-control">
+        <label class="form-label">Password</label>
+        <input type="text" name="password" class="form-control">
+        <input class="btn btn-outline-dark mt-3 w-100" type="submit">
+    </form>
+    <a class="btn" href="/api/auth/github">Entregar con Git</a>
+</div>
+<script>
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        let email = document.querySelector('input[name="email"]').value;
+        let password = document.querySelector('input[name="password"]').value;
+        
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type:''application/json',
+                'Authorization: `Bearer ${localStorage.getItem(authToken)}`'
+            },
+            body: JSON.stringify({
+                email,
+                password
+            })
+        })
+        .then(resp => resp.json())
+        .then(resp => localStorage.setItem('authToken', resp.access_token))
+        } 
+    let form = document.querySelector('#form').addEventListener('submit', handleSubmit);
+
+</script>

@@ -1,0 +1,32 @@
+<div>
+    <h1>¡Hola, {{ user.name }}!, ¡Que gusto verte!</h1>
+    <h2>Socket Io</h2>
+    <hr>
+    <div>
+        <input type="text" name="chatbox" id="chatbox">
+    </div>
+    <div>
+        <ul id="messageLogs"></ul>
+    </div>
+
+    
+    <hr>
+    {{#if isAdmin}}
+        <div class="container d-flex justify-content-center align-items-center">
+            {{#each products}}
+                <div class="card w-25 m-3 shadow-lg">
+                    <img src="{{this.thumnail}}" class="card-img-top" alt="hamburguesa">
+                    <div class="card-body">
+                        <p>Nombre del producto: {{this.title}}</p>
+                        <p>Precio: {{this.price}}</p>
+                        {{!-- <p>{{}}</p> --}}
+                    </div>
+                </div>
+        {{/each}}
+    {{else}}
+        <h2>Ud No tiene permisos necesarios para ver los productos</h2>
+    {{/if}}
+</div>
+<script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.all.min.js "></script>
+<script src="/socket.io/socket.io.js"></script>
+
