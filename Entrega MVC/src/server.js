@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')
 const { initializePassport } = require('./middleware/initialPassport')
 const passport = require('passport')
 const { objConfig } = require('./config/conectionMongo')
+const cors = require('cors')
 require('dotenv').config()
 
 
@@ -17,7 +18,7 @@ objConfig.initConnection()
 const PORT = 8080 || process.env.PORT
 
 //----------------------------------------------------------------//
-
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 app.use(logger('dev'))

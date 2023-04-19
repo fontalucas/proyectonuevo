@@ -1,28 +1,25 @@
 const { Router } = require('express')
 const productRouter = require('./productosRouter.js')
-const userRouter = require('./usersRouter')
-const cookieRouter = require('./cookieRouter')
-const authRouter = require('./authRouter')
-const cartRouter = require('./cartRouter')
-const dicRouter = require('./usuarioRouter')
-const usersRouter = require('./rutes.js')
-const forkRouter = require('./forkRouter.js')
+const userRouter = require('./usersRouter.js')
+//const cookieRouter = require('./cookieRouter')
+const authRouter = require('./authRouter.js')
+const cartRouter = require('./cartRouter.js')
+const ordersRouter = require('./ordersRouter.js')
+
 
 
 const router = Router()
 
-router.get('/',  (req, res) => {
+router.get('/', (req, res) => {
     res.send('Ruta raiz')
 })
 
 //RUTAS PARA PRODUCTOS
 router.use('/', authRouter)
-router.use('/fork', forkRouter)
-router.use('/cookie', cookieRouter)
 router.use('/api/products', productRouter)
 router.use('/api/cart', cartRouter)
 router.use('/api/usuarios', userRouter)
-//router.use('/dic', dicRouter)
+router.use('/api/orders', ordersRouter)
 
 //let usersRouter = new UserRouter()
 //router.use('/user', usersRouter.getRouter())

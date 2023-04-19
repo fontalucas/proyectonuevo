@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { authorization } = require('../middleware/authorization')
 const { passportCall } = require('../utils/passportCall')
-const { usersController } = require('../controller/usersController')
+const { getAllUsers, createUser } = require('../controller/usersController')
 
 
 
@@ -12,8 +12,8 @@ const router = Router()
 
 //router.get('/', passportCall('jwt'), authorization('admin'), async (req, res) =>{
 
-router.get('/', passportCall('jwt'), authorization('admin'), usersController.getAllUsers)
-router.post('/', usersController.createUser)
+router.get('/', getAllUsers)
+router.post('/', createUser)
 
 
 

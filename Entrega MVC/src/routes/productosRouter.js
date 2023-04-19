@@ -1,13 +1,13 @@
 const { response } = require('express')
 const { Router } = require('express')
-const ProductModel = require('../models/productos.model.js')
+const { getProducts } = require('../controller/productsController')
 const ProductManagerMongo = require('../daos/mongo/productManagerMongo')
 
 const router = Router()
 
 const productManagerMongo = new ProductManagerMongo
 // el get trae http://localhost:8080/api/productos
-router.get('/', productsController.getProduct)
+//router.get('/', getProducts)
 
 
 

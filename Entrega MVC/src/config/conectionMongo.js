@@ -10,7 +10,7 @@ dotenv.config({
     path: mode === 'DEVELOPMENT' ? './.env.development' : './.env.production'
 })
 
-const url = process.env.MONGO_URL || 'mongodb://localhost:27017/apprealb'
+const url = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017/apprealb'
 
 
 const objConfig = {
@@ -38,7 +38,7 @@ const objConfig = {
             mongoOptions: {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-            }, ttl: 150000
+            }, ttl: 0
         }),
         secret: 's3cr3t0',
         resave: false,

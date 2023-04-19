@@ -1,8 +1,9 @@
-const {objConfig, initConnection} = require('../config/conectionMongo')
+const {persistence, initConnection} = require('../config/conectionMongo')
 
 let ProductDao 
 let UserDao
 let CartDao
+let OrderDao
 
 switch (persistence) {
     case 'MONGO':
@@ -15,6 +16,9 @@ switch (persistence) {
 
         const CartManagerMongo = require('./mongo/cartManagerMongo')
         CartDao = CartManagerMongo
+        
+        const OrderManagerMongo = require('./mongo/orderManagerMongo')
+        OrderDao = OrderManagerMongo
         break;
 
     case 'ARCHIVO':
@@ -28,5 +32,6 @@ switch (persistence) {
 module.exports = {
     ProductDao,
     UserDao,
-    CartDao
+    CartDao,
+    OrderDao
 }

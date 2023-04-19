@@ -2,7 +2,7 @@ const { response } = require('express')
 const userService = require('../repositories/index')
 
 
-module.exports = class UsersController  {
+class UsersController  {
     createUser = async (req, res = response) => {
             //mada el  cliente request 
             try {
@@ -42,3 +42,5 @@ module.exports = class UsersController  {
         }
     }
 }
+
+module.exports = new UsersController()

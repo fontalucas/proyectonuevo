@@ -1,16 +1,17 @@
 const UserDTO = require('../dto/userDto')
-const { UserDao } = require('../daos/factory.js')
-
 
 class UserRepositories {
+    constructor(UserDao) {
+        this.userDao = UserDao
+    }
         getAllUsers(){
-            return UserDao.getAllUsers()
+            return this.userDao.getAllUsers()
         }
     
         createUser(newUser){
             let newUserNormaliz = new UserDTO(newUser)
-            UserDao.createUser(newUserNormaliz)
-            return UserDao
+            this.userDao.createUser(newUserNormaliz)
+            return this.userDao
         }
     }
 
