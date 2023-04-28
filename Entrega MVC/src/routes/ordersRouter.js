@@ -1,13 +1,15 @@
 const {Router} = require ('express')
-const {getOrders, createOrder, updateOrder, getOrder, deleteOrder } = require('../controller/ordersController')
+const  OrdersController = require('../controller/ordersController')
+
+const ordersController = new OrdersController
 
 const router = Router()
 
 router
-    .get('/', getOrders)
-    .get('/:oid', getOrder,)
-    .post('/', createOrder)
-    .delete('/:oid', deleteOrder)
-    .put('/:oid', updateOrder)
+    .get('/', ordersController.getOrders)
+    .get('/:oid', ordersController.getOrder,)
+    .post('/', ordersController.createOrder)
+    .delete('/:oid', ordersController.deleteOrder)
+    .put('/:oid', ordersController.updateOrder)
 
 module.exports = router

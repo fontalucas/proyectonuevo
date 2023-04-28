@@ -11,6 +11,8 @@ const passport = require('passport')
 const { objConfig } = require('./config/conectionMongo')
 const cors = require('cors')
 require('dotenv').config()
+const nodemailer = require('nodemailer')
+const twilio = require('twilio')
 
 
 const app = express()
@@ -23,6 +25,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 app.use(logger('dev'))
 app.use('/virtual', express.static(__dirname+'/public'))
+
 
 
 /* PASSPORT */
@@ -60,6 +63,56 @@ app.use(session({
 
 /* RUTA RAIZ */
 app.use('/', useRouter)
+
+const transport = nodemailer.createTransport({
+    service: 'gmail',
+    port: 578,
+    auth: {
+        user: 'lukas.fonta@gmail.com',
+        pass: 'iemnllsplbyxzxrj',
+    },
+})
+app.get('/api/mail', async (req, res) => {
+    try {
+        let user = {
+            nombre: 'Lucas',
+            apellido: 'Fonta'
+        }
+        let result = await transport.sendMail({
+            from: 'Servicio de Node lukas.fonta@gmail.com',
+            to: 'lukas.fonta@gmail.com', //'correo al cual enviar'
+            subjet: 'Mail de prueba',
+            html: `<div>
+                    <h1> Bienvenido ${user.nombre} </h1>
+                    </div>`,
+            /* attachments: [
+                {
+                    path: 'imagenurl'
+                }
+            ] */
+        })
+    } catch (error) {
+        console.log(error);
+    }
+
+})
+const twilio_account_sid =  'ACbf17e781eb7ff131d1f50d926dac61b0'
+const twilio_auth_token =  '6490f8c57b753a8202e8c6487d6b3a21'
+//const twilio_phone_number = process.env.TWILIO_PHONE_NUMBER
+
+const cliente = twilio(twilio_account_sid, twilio_auth_token)
+app.get('/api/sms', async (req, res) => {
+    try {
+        await cliente.messages.create({
+            body: 'Esto es un mensaje SMS',
+            from: '+16073884868',
+            to: '+543424222184',
+        })
+        res.send({status: 'success', payload: 'mensaje enviado'})
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 
 const httpServer = app.listen(PORT, err => {

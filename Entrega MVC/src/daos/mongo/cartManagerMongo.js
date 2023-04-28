@@ -42,14 +42,6 @@ module.exports = class CartManagerMongo {
             
         }
     }
-    async uploadArrayProduct(cid, product){
-        try {
-            const arrayProduct = await CartModel.deleteOne({_id: cid}, {$set: product})
-            return arrayProduct
-        } catch (error) {
-            
-        }
-    }
 
     async deleteProduct(cid, pid){
         try{
@@ -60,6 +52,17 @@ module.exports = class CartManagerMongo {
             console.log(err)
         }
     }
+
+    async deleteArrayProduct(cid, product){
+        try {
+            const arrayProduct = await CartModel.deleteOne({_id: cid}, {$set: product})
+            return arrayProduct
+        } catch (error) {
+            
+        }
+    }
+
+    async createTicket()
 }
 
 /* let resp = await UserModel.find().explain('executionStats')

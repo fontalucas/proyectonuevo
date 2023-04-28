@@ -4,18 +4,18 @@ const dotenv = require('dotenv')
 const { commander } = require('../utils/commander')
 const {mode} = commander.opts()
 
-const environments = mode || 'DEVELOPMENT'
+const environments = mode || 'PRODUCTION'
 // -----------------------     CLASE DE PROCESS ------------------
 dotenv.config({
-    path: mode === 'DEVELOPMENT' ? './.env.development' : './.env.production'
+    path: environments === 'development' ? './.env.development' : './.env.production'
 })
 
-const url = process.env.MONGO_URL || 'mongodb://0.0.0.0:27017/apprealb'
+const url = process.env.MONGO_URL || 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/ecommerce'
 
 
 const objConfig = {
-    port: process.env.port || 8080,
-    mongoUrl: process.env.MONGO_URL,
+    PORT: process.env.PORT,
+    MONGO_URL: url,
     adminName: process.env.ADMIN_NAME || 'admin',
     adminPassword: process.env.ADMIN_PASSWORD || 'admin',
     persistence: process.env.PERSISTENCE,
@@ -45,11 +45,11 @@ const objConfig = {
         saveUninitialized: false,
     }
 }
-    //const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/ecommerce'
 
 module.exports = {objConfig}
 
 
+//const url = 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/ecommerce'
 
 /* Clase mongo */
 /* let resp = await UserModel.find().explain('executionStats')

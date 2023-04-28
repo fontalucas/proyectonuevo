@@ -2,29 +2,25 @@ const OrderModel = require('../../models/order.model')
 
 
 class OrderManagerMongo {
-    constructor(){
-        this.orderModel = OrderModel
-    }
-
-    async get(){
+    async getOrders(){
         try {
-            return await this.orderModel.find({})
+            return await OrderModel.find({})
         } catch (error) {
             return new Error(error)
         }
     }
     async getOrder(oid){
         try {
-            return await this.orderModel.findById({oid})
+            return await OrderModel.findById(oid)
         } catch (error) {
             new Error(error)
         }
     }
     async createOrder(newOrder){
         try {
-            return await this.orderModel.create(newOrder)
+            return await OrderModel.create(newOrder)
         } catch (error) {
-            
+            new Error(error)
         }
     }
     async deleteOrder(){}

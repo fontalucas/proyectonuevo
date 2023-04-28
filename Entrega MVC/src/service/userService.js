@@ -1,6 +1,6 @@
 const UserDTO = require('../dto/userDto')
 
-class UserRepositories {
+class UserService {
     constructor(UserDao) {
         this.userDao = UserDao
     }
@@ -15,4 +15,4 @@ class UserRepositories {
         }
     }
 
-module.exports = UserRepositories
+module.exports = UserService

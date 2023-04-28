@@ -1,5 +1,5 @@
 const { response } = require('express')
-const userService = require('../repositories/index')
+const userService = require('../service/index')
 
 
 class UsersController  {

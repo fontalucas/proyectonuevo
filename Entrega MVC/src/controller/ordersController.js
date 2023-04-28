@@ -1,8 +1,9 @@
-const {ordersService} = require("../repositories/ordersService")
+const OrdersService = require("../service/ordersService")
 
+const ordersService = new OrdersService
 
 class OrdersController {
-    async getOrders (req, res){
+    getOrders = async (req, res) =>{
         try {
             let orders = await ordersService.getOrders()
             res.status(200).json(orders)
@@ -10,7 +11,7 @@ class OrdersController {
             console.log(error);
         }
     }
-    async getOrder(req, res){
+    getOrder = async (req, res) =>{
         try {
             const {oid} = req.params
             const order = await ordersService.getOrder(oid)
@@ -20,9 +21,10 @@ class OrdersController {
             console.log(error);
         }
     }
-    async createOrder(req, res){
+    createOrder = async (req, res) =>{
         try {
-            const {body} = req.body
+            const {body} = req
+            console.log(body);
             const resp = await ordersService.createOrder(body)
             res.status(200).json(resp)
             
@@ -34,4 +36,4 @@ class OrdersController {
     deleteOrder(){}
 }
 
-module.exports = new OrdersController()
+module.exports = OrdersController
