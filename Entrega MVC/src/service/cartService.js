@@ -22,6 +22,4 @@ class CartService {
     }
 }
 
-module.exports = {
-    CartService
-}
+module.exports = CartService

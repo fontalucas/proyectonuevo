@@ -17,6 +17,4 @@ class ProductsService {
         return productsDao.deleteProduct(pid)
     }
 }
-module.exports = {
-    ProductsService
-}
+module.exports = ProductsService
