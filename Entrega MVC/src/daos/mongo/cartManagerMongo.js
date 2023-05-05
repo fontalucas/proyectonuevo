@@ -61,8 +61,6 @@ module.exports = class CartManagerMongo {
             
         }
     }
-
-    async createTicket()
 }
 
 /* let resp = await UserModel.find().explain('executionStats')

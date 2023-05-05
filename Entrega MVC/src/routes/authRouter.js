@@ -31,7 +31,7 @@ router.get('/login', async (req, res)=>{
 
 /* LOGIN CON GITHUB */
 router.get('/github', passport.authenticate('github', {scope: ['user:email']}))
-router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/api/auth/login'}))
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}))
 //----------------------------------------------------------------//
 
 

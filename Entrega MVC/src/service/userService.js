@@ -1,7 +1,8 @@
 const UserDTO = require('../dto/userDto')
+const UserDao = require('../daos/mongo/userManagerMongo')
 
 class UserService {
-    constructor(UserDao) {
+    constructor() {
         this.userDao = UserDao
     }
         getAllUsers(){
@@ -12,6 +13,10 @@ class UserService {
             let newUserNormaliz = new UserDTO(newUser)
             this.userDao.createUser(newUserNormaliz)
             return this.userDao
+        }
+
+        async getUser(id){
+            return await this.userDao.getUser(id)
         }
     }
 

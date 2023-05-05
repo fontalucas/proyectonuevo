@@ -1,7 +1,8 @@
 const passport = require('passport');
 const local = require('passport-local');
-const UserModel = require('../models/userModel');
+const { UsersController } = require('../controller/usersController');
 const GithubStrategy = require('passport-github2');
+const UserModel = require('../models/userModel')
 const { createHash, isValidPassword } = require('../utils/bcryptPass.js')
 
 const LocalStrategy = local.Strategy
@@ -20,8 +21,9 @@ function initializePassport() {
                 let newUser = {
                     first_name: profile.username,
                     last_name: profile.username,
-                    email: 'fontanellazlucas@gmail.com',
-                    password: ''
+                    role: 'user',
+                    email: profile._json.email,
+                    password: '1234'
                 }
                 let result = await UserModel.create(newUser)
                 return done(null, result)
@@ -38,7 +40,7 @@ function initializePassport() {
         },
         async (username, password, done) => {
             try {
-                let user = await UserModel.create(username)
+                let user = await UsersController.create(username)
                 console.log(user)
                 if (!user) {
                     console.log('usuario no existe')
@@ -66,14 +68,14 @@ function initializePassport() {
             //console.log('username: ',username);
             //console.log('password: ',password);
             try {
-                let exist = await UserModel.findOne(username)
+                let exist = await UsersController.getUser(username)
                 
                 if(exist) {
                     console.log('Usuario existente')
                     return done(null, false)
                 }else{
                     console.log('Usuario creado')
-                    let result = await UserModel.create(user)
+                    let result = await UsersController.createUser(user)
                     return done(null, result)
                 }
             } catch (error) {

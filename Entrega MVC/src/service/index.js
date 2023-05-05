@@ -2,7 +2,7 @@ const { UserDao, OrderDao, CartDao, ProductDao } = require('../daos/factory.js')
 
 const UserService = require('./userService.js') //service
 const OrdersService = require('./ordersService.js')
-const ProductService = require('./productService.js')
+const ProductService = require('./productsService.js')
 const CartService = require('./cartService.js')
 
 

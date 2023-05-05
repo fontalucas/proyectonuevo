@@ -41,6 +41,17 @@ class UsersController  {
             console.log(error) 
         }
     }
+
+    getUser = async (req, res) => {
+        try {
+            const {id} = req.params
+            let user = await userService.getUser(id)
+            res.status(200).send(user)
+        } catch (error) {
+            console.log(error);
+        }
+    
+    }
 }
 
 module.exports = new UsersController()

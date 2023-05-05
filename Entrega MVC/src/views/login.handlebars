@@ -7,7 +7,7 @@
         <input type="text" name="password" class="form-control">
         <input class="btn btn-outline-dark mt-3 w-100" type="submit">
     </form>
-    <a class="btn" href="/api/auth/github">Entregar con Git</a>
+    <a class="btn" href="/github">Entregar con Git</a>
 </div>
 <script>
     const handleSubmit = (evt) => {
@@ -15,7 +15,7 @@
         let email = document.querySelector('input[name="email"]').value;
         let password = document.querySelector('input[name="password"]').value;
         
-        fetch('/api/auth/login', {
+        fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type:''application/json',

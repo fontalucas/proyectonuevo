@@ -13,11 +13,12 @@ const cors = require('cors')
 require('dotenv').config()
 const nodemailer = require('nodemailer')
 const twilio = require('twilio')
+const { addLogger } = require('./middleware/logger.js')
 
 
 const app = express()
-objConfig.initConnection()
 const PORT = 8080 || process.env.PORT
+objConfig.initConnection()
 
 //----------------------------------------------------------------//
 app.use(cors())
@@ -25,7 +26,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 app.use(logger('dev'))
 app.use('/virtual', express.static(__dirname+'/public'))
-
 
 
 /* PASSPORT */
@@ -64,7 +64,7 @@ app.use(session({
 /* RUTA RAIZ */
 app.use('/', useRouter)
 
-const transport = nodemailer.createTransport({
+/* const transport = nodemailer.createTransport({
     service: 'gmail',
     port: 578,
     auth: {
@@ -85,11 +85,11 @@ app.get('/api/mail', async (req, res) => {
             html: `<div>
                     <h1> Bienvenido ${user.nombre} </h1>
                     </div>`,
-            /* attachments: [
-                {
-                    path: 'imagenurl'
-                }
-            ] */
+            // attachments: [
+             //   {
+            //        path: 'imagenurl'
+            //    }
+           // ] 
         })
     } catch (error) {
         console.log(error);
@@ -112,7 +112,7 @@ app.get('/api/sms', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-})
+}) */
 
 
 const httpServer = app.listen(PORT, err => {
