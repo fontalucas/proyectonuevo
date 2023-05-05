@@ -7,11 +7,11 @@ const generateProducts = () => {
     return {
         title: faker.commerce.productName(),
         price: faker.commerce.price(),
-        departament: faker.commerce.department(),
+        category: faker.commerce.department(),
         stock: faker.random.numeric(),
         description: faker.commerce.productDescription(),
         id: faker.database.mongodbObjectId(),
-        img: faker.image.image()
+        thumbnail: faker.image.business()
     }
 }
 
@@ -32,4 +32,4 @@ const generateUser = () => {
         products
     }
 }
-module.exports = generateUser()
+module.exports = {generateUser, generateProducts}

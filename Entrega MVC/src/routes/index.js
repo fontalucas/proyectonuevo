@@ -21,7 +21,7 @@ router.use('/api/products', productRouter)
 router.use('/api/cart', cartRouter)
 router.use('/api/usuarios', userRouter)
 router.use('/api/orders', ordersRouter)
-router.use('/faker', fakerRouter)
+router.use('/mocking', fakerRouter)
 
 //let usersRouter = new UserRouter()
 //router.use('/user', usersRouter.getRouter())
