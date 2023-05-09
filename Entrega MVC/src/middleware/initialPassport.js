@@ -1,10 +1,11 @@
 const passport = require('passport');
 const local = require('passport-local');
-const { UsersController } = require('../controller/usersController');
 const GithubStrategy = require('passport-github2');
 const UserModel = require('../models/userModel')
-const { createHash, isValidPassword } = require('../utils/bcryptPass.js')
+const { createHash, isValidPassword } = require('../utils/bcryptPass.js');
+const  {UserDao}  = require('../daos/factory');
 
+const userDao = UserDao
 const LocalStrategy = local.Strategy
 
 function initializePassport() {
@@ -23,7 +24,7 @@ function initializePassport() {
                     last_name: profile.username,
                     role: 'user',
                     email: profile._json.email,
-                    password: '1234'
+                    password: createHash('1234')
                 }
                 let result = await UserModel.create(newUser)
                 return done(null, result)
@@ -40,7 +41,7 @@ function initializePassport() {
         },
         async (username, password, done) => {
             try {
-                let user = await UsersController.create(username)
+                let user = await userDao.createUser(username)
                 console.log(user)
                 if (!user) {
                     console.log('usuario no existe')
@@ -68,14 +69,14 @@ function initializePassport() {
             //console.log('username: ',username);
             //console.log('password: ',password);
             try {
-                let exist = await UsersController.getUser(username)
+                let exist = await userDao.getUser(username)
                 
                 if(exist) {
                     console.log('Usuario existente')
                     return done(null, false)
                 }else{
                     console.log('Usuario creado')
-                    let result = await UsersController.createUser(user)
+                    let result = await userDao.createUser(user)
                     return done(null, result)
                 }
             } catch (error) {

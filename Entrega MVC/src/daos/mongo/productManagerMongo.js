@@ -1,7 +1,7 @@
 const ProductModel = require("../../models/productos.model")
 
 
-module.exports = class ProductManagerMongo{
+module.exports = class ProductManagerMongo {
     
 
     async addProduct({title, description, price, thumbnail}){
@@ -14,14 +14,13 @@ module.exports = class ProductManagerMongo{
             console.log(err)
         }
     }
-    async getProducts(category, limit, page, orden){
+    async getProducts(category, limit, page){
         try {
-            const products = await ProductModel.paginate({category: category}, {limit: 10, page: page, $sort: orden})
+            const products = await ProductModel.paginate(category, {limit: 10, page: page, lean: true})
             console.log(products)
-            if (!limit || !sort || !category) {
+            if (!limit || !category) {
                 return products
             }
-
         }catch(err){
             console.log(err)
         }

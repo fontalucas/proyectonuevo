@@ -1,7 +1,6 @@
 const { Router } = require('express')
 const productRouter = require('./productosRouter.js')
 const userRouter = require('./usersRouter.js')
-//const cookieRouter = require('./cookieRouter')
 const authRouter = require('./authRouter.js')
 const cartRouter = require('./cartRouter.js')
 const ordersRouter = require('./ordersRouter.js')
@@ -16,7 +15,7 @@ router.get('/', (req, res) => {
 })
 
 //RUTAS PARA PRODUCTOS
-router.use('/', authRouter)
+router.use('/api/auth', authRouter)
 router.use('/api/products', productRouter)
 router.use('/api/cart', cartRouter)
 router.use('/api/usuarios', userRouter)

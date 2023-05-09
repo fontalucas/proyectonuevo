@@ -26,7 +26,7 @@ const objConfig = {
                 useNewUrlParser: true,
                 useUnifiedTopology: true
             })
-            console.log('Connecting')
+            console.log('Connecting Mongo')
         }catch (error) {
             console.error(error)
             process.exit()
@@ -38,7 +38,7 @@ const objConfig = {
             mongoOptions: {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
-            }, ttl: 0
+            },
         }),
         secret: 's3cr3t0',
         resave: false,

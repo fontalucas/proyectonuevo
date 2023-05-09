@@ -30,6 +30,3 @@ const initializePassport = () => {
     ))
 }
 
-module.exports = {
-    initializePassport
-}

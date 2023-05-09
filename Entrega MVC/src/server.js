@@ -53,14 +53,6 @@ app.use(session({
 //MONGO SESSION/
 app.use(session(objConfig.session))
 
-/* COOKIES */
-app.use(cookieParser('p@l@br@s3cr3t@'))
-app.use(session({
-    secret: 'secretCoder',
-    resave: true,
-    saveUninitialized: true
-}))
-
 /* RUTA RAIZ */
 app.use('/', useRouter)
 

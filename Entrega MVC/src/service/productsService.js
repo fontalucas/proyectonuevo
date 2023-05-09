@@ -1,8 +1,9 @@
-const productsDao = require('../daos/mongo/productManagerMongo')
+const ProductsDao = require('../daos/mongo/productManagerMongo')
+const productsDao = new ProductsDao
 
 class ProductsService {
-    async getProducts(limit, page){
-        return productsDao.getProducts(category, limit, page, orden)
+    async getProducts(limit){
+        return productsDao.getProducts(limit)
     }
     async addProduct(title, description, price, thumbnail){
         return productsDao.addProduct({title, description, price, thumbnail})

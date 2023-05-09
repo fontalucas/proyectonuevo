@@ -15,8 +15,8 @@ class UserService {
             return this.userDao
         }
 
-        async getUser(id){
-            return await this.userDao.getUser(id)
+        async getUser(email){
+            return await this.userDao.getUser(email)
         }
     }
 

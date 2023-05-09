@@ -1,13 +1,14 @@
+const { request } = require('express')
 const  ProductsService  = require('../service/productsService')
 
 const productsService = new ProductsService
 
-class ProductsController  {
+class ProductsController {
     
-    getProducts = async (req, res) => {
+    getProducts = async (req = request, res) => {
         try { 
-            const {page, limit } = req.query
-            const {docs, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await productsService.getProducts(category, limit, page, orden)
+            const {page = 1, limit} = req.query
+            const {docs, hasPrevPage, hasNextPage, prevPage, nextPage, prevLink, nextLink, totalPages} = await productsService.getProducts(limit)
             const products = docs
             
             res.status(200).render('products',{
@@ -26,7 +27,7 @@ class ProductsController  {
             console.log(err);
         }
 }
-    getProductById = async (req, res) => {
+    getProductById = async (req = request, res) => {
         try { 
         const {pid} = req.params
         const productById = await productsService.getProductById(pid)
@@ -34,10 +35,11 @@ class ProductsController  {
 
         if(!productById) return res.send(products)
 
-        res.status(200).send({
+        else {
+            res.status(200).send({
             status: 'success',
             productById
-        })
+        })}
     }catch(err) {
         console.log(err);
     }
@@ -96,6 +98,4 @@ class ProductsController  {
     }
 }
 
-module.exports = {
-    ProductsController
-}
+module.exports = {ProductsController}
