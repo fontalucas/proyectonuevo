@@ -1,5 +1,7 @@
+
 const {UserModel} = require('../models/userModel')
 const { createHash, isValidPassword } = require('../utils/bcryptPass.js');
+const { authorization } = require('../middleware/authorization');
 
 class LoginController {
     
@@ -7,20 +9,26 @@ class LoginController {
         res.status(200).render('login')}
         
     loginUser = async (req, res)=>{
-            const {email, password} = req.body
-            //const user = await UserModel.findOne({email})
-            const user = await UserModel.findOne(user => user.email === email && user.password === password)
+            const {email, password, role} = req.body
+            const user = await UserModel.findOne(user => user.email === email && user.password === password && user.role === role)    
+        try {
             if (!user) return res.status(404).send({status: 'error', message: 'Usuario incorrecto'})
             
+            if (user.role === 'admin') return
+                authorization()
+                req.logger.info('Permisos de Admin activado')
+            
             const isValidPass = isValidPassword(user, password)
-
+            
             if (!isValidPass) return res.status(401).send({status: 'error', error: 'Usuario o contraseña incorrectos'})
-
+            
             console.log('logged in!')
-
+            
             res.send({status:'success', message: 'Usuario logueado correctamente'})
-
+        } catch (error) {
+            
         }
+    }
 
     registerRender = async (req, res) => {
             res.status(200).render('register')

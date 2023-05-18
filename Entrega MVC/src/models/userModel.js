@@ -29,6 +29,6 @@ const userSchema = new Schema({
 
 userSchema.plugin(mongoosePaginate)
 
-let UserModel = model(userCollection, userSchema)
+const UserModel = model(userCollection, userSchema)
 
 module.exports = UserModel

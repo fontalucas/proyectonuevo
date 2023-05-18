@@ -1,3 +1,4 @@
+const { addLogger } = require('../middleware/logger')
 const CartService = require('../service/cartService')
 
 const cartService = new CartService
@@ -54,7 +55,7 @@ class CartController {
                 
         })
         }  catch (error) {
-            console.log(error)
+            addLogger(error)
         }
     }
     deleteArrayProduct = async (req, res) => {

@@ -6,15 +6,18 @@ const ProductService = require('./productsService.js')
 const CartService = require('./cartService.js')
 
 
+
 const ordersService = new OrdersService(OrderDao)
 const userService = new UserService(UserDao)
 const productService = new ProductService(ProductDao)
 const cartService = new CartService(CartDao)
 
 
+
 module.exports = {
     userService,
     ordersService,
     productService,
-    cartService
+    cartService,
+    
 }

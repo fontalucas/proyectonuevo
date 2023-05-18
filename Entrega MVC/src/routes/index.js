@@ -5,6 +5,7 @@ const authRouter = require('./authRouter.js')
 const cartRouter = require('./cartRouter.js')
 const ordersRouter = require('./ordersRouter.js')
 const fakerRouter = require('./fakerRouter.js')
+const loggerRouter = require('./loggerRouter.js')
 
 
 
@@ -21,6 +22,7 @@ router.use('/api/cart', cartRouter)
 router.use('/api/usuarios', userRouter)
 router.use('/api/orders', ordersRouter)
 router.use('/mocking', fakerRouter)
+router.use('/loggertest', loggerRouter)
 
 //let usersRouter = new UserRouter()
 //router.use('/user', usersRouter.getRouter())

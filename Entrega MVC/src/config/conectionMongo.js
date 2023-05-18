@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 const { commander } = require('../utils/commander')
 const {mode} = commander.opts()
 
-const environments = mode || 'PRODUCTION'
+const environments = mode || 'development'
 // -----------------------     CLASE DE PROCESS ------------------
 dotenv.config({
     path: environments === 'development' ? './.env.development' : './.env.production'
@@ -12,14 +12,13 @@ dotenv.config({
 
 const url = process.env.MONGO_URL || 'mongodb+srv://realburger:safonereal2021@ecommerce.1cxhfed.mongodb.net/ecommerce'
 
-
 const objConfig = {
     PORT: process.env.PORT,
     MONGO_URL: url,
     adminName: process.env.ADMIN_NAME || 'admin',
     adminPassword: process.env.ADMIN_PASSWORD || 'admin',
     persistence: process.env.PERSISTENCE,
-
+    
     initConnection: async () => {
         try{
             await connect(url, {
@@ -30,7 +29,7 @@ const objConfig = {
         }catch (error) {
             console.error(error)
             process.exit()
-    }
+        }
 },
     session: {  
         store: MongoStore.create({

@@ -16,15 +16,16 @@ const twilio = require('twilio')
 const { addLogger } = require('./middleware/logger.js')
 
 
+
 const app = express()
 const PORT = 8080 || process.env.PORT
 objConfig.initConnection()
 
 //----------------------------------------------------------------//
+app.use(logger())
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
-app.use(logger('dev'))
 app.use('/virtual', express.static(__dirname+'/public'))
 
 
