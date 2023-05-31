@@ -1,0 +1,181 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Productos obtenidos correctamente
+          content:
+            applications/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "500":
+          description: Error al obtener los productos
+
+  /api/products/:
+    post:
+      summary: Agrega un producto
+      tags:
+        - Products
+      requestBody:
+        required: true
+        description: El producto que quieras agregar
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/addProduct'
+      responses:
+        "200":
+          description: El producto fue agregado
+        "500":
+          description: No se pudo agregar el producto
+
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un producto por ID
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Seleccionar un producto
+        schema:
+          $type: String
+      responses: 
+        "200":
+          description: El producto fue obtenido correctamente
+          content:
+            applications/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        "500":
+          description: No se pudo obtener el productos
+
+    put:
+      summary: Actualizar un producto
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Id del producto que desea actualizar
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses: 
+        "200":
+          description: El producto fue actualizado correctamente
+        "500":
+          description: No se pudo actualizar el producto
+    
+    delete:
+      summary: Elimina un produtco
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: Id del producto que desea eliminar
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: Producto borrado
+        "500":
+          description: No se pudo eliminar el producto
+
+components: 
+  schema: 
+    Product:
+      type: object
+      properties: 
+        _id:
+          type: string
+          description: Id autogenerado por Mongo.
+        title:
+          type: string
+          description: Titulo del producto.
+        description:
+          type: string
+          description: Descripcion del producto.
+        code:
+          type: Number
+          description: El code del producto, este campo es único y no puede repetirse
+        price:
+          type: Number
+          description: El precio del producto
+        status:
+          type: string
+          description: Determinara el estado del producto
+        stock:
+          type: Number
+          description: Stock disponible del producto
+        category:
+          type: string
+          description: Categoria a la que pertenece el producto
+        thumbnail:
+          type: string
+          description: link IMG del producto
+
+      example: 
+        _id: ObjectId("xxxxxxxxxxxxxxxx")
+        title: Producto1
+        description: Esta es la descripcion del producto
+        code:  1  
+        price: 1000
+        status: 'true'
+        stock: 100
+        category: Burgers
+        thumbnail: link de la imagen
+
+  requestBodies:
+    addProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Titulo del producto.
+        description:
+          type: string
+          description: Descripcion del producto.
+        code:
+          type: Number
+          description: El code del producto, este campo es único y no puede repetirse
+        price:
+          type: Number
+          description: El precio del producto
+        status:
+          type: string
+          description: Determinara el estado del producto
+        stock:
+          type: Number
+          description: Stock disponible del producto
+        category:
+          type: string
+          description: Categoria a la que pertenece el producto
+        thumbnail:
+          type: string
+          description: link IMG del producto
+      example: 
+        title: Producto
+        description: Esta es la descripcion del producto
+        code:  1
+        price: 1000
+        status: 'true'
+        stock: 100
+        category: Burgers
+        thumbnail: link de la imagen
