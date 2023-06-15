@@ -1,4 +1,4 @@
-const swaggerJsDoc = require('swagger-jsdoc')
+/* const swaggerJsDoc = require('swagger-jsdoc')
 const {Router} = require('express')
 
 const router = Router()
@@ -11,9 +11,9 @@ const swaggerOptions = {
             title: 'Documentacion de nuestra app',
             description: 'Api pensada para ecommerce'
         }
-    },
-    apis: [`${__dirname}/docs/**/*.yaml`]
-}
+    }, */
+    //apis: [`${__dirname}/docs/**/*.yaml`]
+/* }
 const specs = swaggerJsDoc(swaggerOptions)
 
-module.exports = router, specs
+module.exports = router, specs */

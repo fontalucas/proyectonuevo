@@ -34,7 +34,7 @@ paths:
         "500":
           description: No se pudo obtener el carrito
 
-  /api/cart/{cid}:
+
     delete:
       summary: Elimina los productos seleccionados del carrito
       tags:
@@ -52,7 +52,7 @@ paths:
         "500":
           description: No se pudo eliminar el carrito
 
-  /api/cart/{cid}:
+
     put:
       summary: Se actualizan los productos del carrito
       tags:
@@ -100,7 +100,7 @@ paths:
         "500":
           description: No se pudo actualizar el producto del carrito
 
-  /api/cart/{cid}/product/{pid}:
+
     delete:
       summary: Elimina un producto del carrito
       tags:
@@ -212,5 +212,5 @@ components:
             description: cantidad de producto del mismo tipo
       description: Lista de etiquetas
       example:
-        - pid: 123456asd
+        - pid: 12
             quantity: 1

@@ -1,6 +1,5 @@
 const express = require('express')
 const useRouter = require('./routes/index.js')
-const logger = require('morgan')
 const handlebars = require('express-handlebars')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
@@ -9,13 +8,17 @@ const MongoStore = require('connect-mongo')
 const { initializePassport } = require('./middleware/initialPassport')
 const passport = require('passport')
 const { objConfig } = require('./config/conectionMongo')
-const cors = require('cors')
 require('dotenv').config()
 const nodemailer = require('nodemailer')
 const twilio = require('twilio')
+//logger
+const { logger } = require('./config/logger.js')
 const { addLogger } = require('./middleware/logger.js')
+//swagger
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUiExpress = require('swagger-ui-express')
+const {swaggerOptions} = require('./config/swagger.js')
+const cors = require('cors')
 
 
 const app = express()
@@ -23,11 +26,15 @@ const PORT = 8080 || process.env.PORT
 objConfig.initConnection()
 
 //----------------------------------------------------------------//
-app.use(logger())
+app.use(addLogger)
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 app.use('/virtual', express.static(__dirname+'/public'))
+
+//SWAGGER
+const specs = swaggerJsDoc(swaggerOptions)
+app.use('/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 
 /* PASSPORT */
@@ -109,10 +116,7 @@ app.get('/api/sms', async (req, res) => {
 }) */
 
 
-const httpServer = app.listen(PORT, err => {
-if (err) return console.log(err).res.status(500).send('Todo mal')
-    console.log(`Servidor ${PORT} funcionando`)
-})
+const httpServer = app.listen(PORT, () => logger.info(`Servidor ${PORT} funcionando`))
 
 // instanciando socket
 const io = new Server(httpServer)
